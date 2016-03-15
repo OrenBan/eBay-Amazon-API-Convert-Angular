@@ -1,0 +1,43 @@
+﻿<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
+
+<div ng-app="myApp" ng-controller="myCtrl">
+
+    <p>GetEbayCategoryByAmazonCategory:</p>
+
+    <u>Request</u>
+    <h5>{{req}}</h5>
+
+    <br/><br/>
+
+    <u>Response</u>
+    <h5>{{result}}</h5>
+
+</div>
+
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function ($scope, $http) {
+        var dataToSend = {
+            "BrowseNodeId": 2232158011,
+            "RequestAmazonEnvironment": 1,
+            "ResponseEbayEnvironment": 0
+        };
+        $scope.req = dataToSend;
+        var headerValues = { 'Content-Type': 'application/json; charset=utf-8' };
+        headerValues["token"] = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJQcm9ncmFtSWQiOjIsIkdyb3VwSWRlbnRpZmllciI6IjFkNzE5NjAyLTk5MmUtNGI5Yy1iNjNjLWU1Y2M3MjlmYTRjNiIsIlVzZXJJZCI6OH0.OCnNwEHkZxA_oI6QikzcSoF5nxdnoRQm_6MJ6uvB_e4";
+        headerValues["clientId"] = "LPDiCbpal0aUD4nM5mz9Pw";
+        var url = "http://localhost:32224//api/Main/";
+        var functionName = "GetEbayCategoryByAmazonCategory";
+        url = url + functionName;
+            $http({
+                headers: headerValues,
+                method: 'POST',
+                url: url,
+                data: dataToSend,
+                contentType: 'application/json'
+            }).success(function (data, status, headers, config) {
+                $scope.result = data;
+
+            });
+    });
+</script>
